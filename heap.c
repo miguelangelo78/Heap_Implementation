@@ -57,17 +57,17 @@ void * malloc(size_t size){
 
 	if (size <= 0) return NULL;
 
-	if (!global_base){							// WILL HAPPEN ON FIRST RUN, THE HEAP SIZE IS EMPTY
+	if (!global_base){	// WILL HAPPEN ON FIRST RUN, THE HEAP SIZE IS EMPTY
 		block = request_space(NULL, size);
 		if (!block) return NULL;
-		global_base = block;					// THE NEW BASE IS THE NEW REQUESTED BLOCK
-	} else {									// HAPPENS AFTER ^ HAS RUN
+		global_base = block; // THE NEW BASE IS THE NEW REQUESTED BLOCK
+	} else { // HAPPENS AFTER ^ HAS RUN
 		struct heap_meta * last = global_base;
-		block = find_free_block(&last, size);	// FIND FIT BLOCK ON THE HEAP
-		if (!block){							// COULDN'T FIND FIT, REQUEST MORE SPACE
+		block = find_free_block(&last, size); // FIND FIT BLOCK ON THE HEAP
+		if (!block){ // COULDN'T FIND FIT, REQUEST MORE SPACE
 			block = request_space(last, size);
 			if (!block) return NULL;
-		} else block->free = 0;					// FOUND FIT BLOCK!
+		} else block->free = 0; // FOUND FIT BLOCK!
 	}
 	return (block + 1);
 }
@@ -103,11 +103,11 @@ void str(char* ptr, char* str){
 }
 
 void main(){
-	for (int i = 0; i < HEAP_SIZE; i++) HEAP[i] = '.';
+	for (int i = 0; i < HEAP_SIZE; i++) HEAP[i] = '.'; // FILL WITH DOTS
 
 	char * c = (char*) malloc(sizeof(char) * 2);
 	char * c2 = (char*) malloc(sizeof(char) * 2);
-	str(c,"adc");
+	str(c,"adc"); // COPY STRING LITERAL TO PTR
 	
 	dump_heap(50);
 	_getch();
